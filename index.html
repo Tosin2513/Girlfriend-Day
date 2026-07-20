@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Magical Invitation For You ✨</title>
-    <!-- Tailwind CSS for high-end modern styling -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Fredoka & Quicksand -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -82,13 +82,10 @@
     <!-- Canvas for Starry Sky -->
     <canvas id="galaxyCanvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
 
-    <!-- Invisible Audio Engine Containers -->
-    <div class="fixed top-0 left-0 w-1 h-1 opacity-0 pointer-events-none overflow-hidden">
-        <div id="yt-player"></div>
-        <audio id="backup-audio" loop preload="auto">
-            <source src="https://ia800902.us.archive.org/28/items/RihannaTowardsTheSun/Rihanna%20-%20Towards%20The%20Sun.mp3" type="audio/mpeg">
-        </audio>
-    </div>
+    <!-- Local Audio Engine (Place song.mp3 in the same GitHub folder) -->
+    <audio id="local-audio" loop preload="auto">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- ENVELOPE / LOCK SCREEN -->
     <div id="intro-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-[#070514]">
@@ -164,7 +161,7 @@
         <!-- MAIN DASHBOARD CONTENT GRID -->
         <main class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch flex-grow w-full">
             
-            <!-- LEFT COLUMN: Movie Ticket with home.png -->
+            <!-- LEFT COLUMN: Movie Ticket with home.jpg -->
             <section class="lg:col-span-7 flex flex-col justify-between space-y-6">
                 <div class="glass-premium rounded-3xl p-6 md:p-8 flex flex-col justify-between h-full relative overflow-hidden shadow-2xl border border-purple-500/30">
                     <div class="flex justify-between items-start border-b border-purple-500/20 pb-4 mb-6">
@@ -185,7 +182,7 @@
                     <div class="space-y-6 flex-grow flex flex-col justify-center">
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                             
-                            <!-- DreamWorks 'Home' Banner Image (home.png) -->
+                            <!-- DreamWorks 'Home' Banner Image (home.jpg) -->
                             <div class="md:col-span-5 relative group">
                                 <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-2xl blur opacity-70 group-hover:opacity-100 transition duration-1000"></div>
                                 <div class="relative bg-[#110e26] rounded-2xl overflow-hidden aspect-[3/4] flex flex-col items-center justify-center border border-white/10 text-center shadow-lg">
@@ -203,7 +200,7 @@
                                 <div class="space-y-1">
                                     <p class="text-xs text-purple-300 font-semibold uppercase tracking-widest"><i class="fa-solid fa-calendar-days mr-1.5"></i> The Date & Time</p>
                                     <h3 class="text-xl md:text-2xl font-bold text-white">August 1st, 2026 @ 2:00 PM</h3>
-                                    <p class="text-xs text-gray-400">Wherever you are, we'll sync,share the laughter and tears.</p>
+                                    <p class="text-xs text-gray-400">Wherever you are, we'll sync, share the laughter and tears.</p>
                                 </div>
 
                                 <div class="space-y-1 bg-purple-950/20 p-3 rounded-xl border border-purple-500/10">
@@ -268,7 +265,7 @@
                             <h3 class="font-title text-lg">To My Only Scholar...</h3>
                         </div>
                         <p class="text-sm text-gray-300 leading-relaxed">
-                            I know how hard you've been working, how much determination you pack into your days, and how close and stressful this exams are exams are. You are brilliant, beautiful, and absolutely capable of conquering anything you face.
+                            I know how hard you've been working, how much determination you pack into your days, and how close and stressful these exams are. You are brilliant, beautiful, and absolutely capable of conquering anything you face.
                         </p>
                         <p class="text-sm text-gray-300 leading-relaxed">
                             But before you go and crush those study guides like a certified badass, you deserve to press pause. This invitation is for you to just collapse, eat some warm popcorn, and enjoy a movie. Let's make an evening of laugh lines, silly smiles, and quiet comfort.
@@ -287,7 +284,7 @@
                             <h4 class="font-title text-base text-yellow-300 flex items-center gap-1.5">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i> Sweet Stress-Relief
                             </h4>
-                            <p class="text-[10px] text-gray-400">Explode the letters "FUCK DOU" & pop love stuff!</p>
+                            <p class="text-[10px] text-gray-400">Explode the letters & pop love stuff!</p>
                         </div>
                         <div class="bg-pink-900/30 border border-pink-500/30 px-3 py-1 rounded-full text-xs font-semibold text-pink-300">
                             Score: <span id="game-score">0</span>
@@ -335,7 +332,7 @@
             </div>
 
             <div class="bg-[#110e26] p-4 rounded-2xl border border-white/5 space-y-1">
-                <span class="text-[10px] text-gray-400 uppercase block">Send this back to her to seal it:</span>
+                <span class="text-[10px] text-gray-400 uppercase block">Send this back to him to seal it:</span>
                 <p class="text-xs text-yellow-300 font-mono break-all font-semibold" id="confirm-msg-text">
                     "I accept! Let's watch Home together and relax! 🍿❤️"
                 </p>
@@ -355,7 +352,6 @@
         const canvas = document.getElementById('galaxyCanvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
-        let shootingStars = [];
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -401,78 +397,53 @@
         window.addEventListener('resize', resizeCanvas);
         animateStars();
 
-        // Audio Handler Dual-Engine (YouTube API + Local Audio Fallback)
-        let ytPlayer;
+        // Local Audio Handler
+        const audio = document.getElementById('local-audio');
         let isAudioPlaying = false;
         let isMuted = false;
 
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        document.head.appendChild(tag);
-
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('yt-player', {
-                height: '10',
-                width: '10',
-                videoId: 'hS58vOnuXb8',
-                playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'hS58vOnuXb8' },
-                events: {
-                    'onReady': () => {},
-                    'onStateChange': (e) => {
-                        if (e.data === YT.PlayerState.PLAYING) {
-                            setPlayIcon(true);
-                        } else if (e.data === YT.PlayerState.PAUSED) {
-                            setPlayIcon(false);
-                        }
-                    }
-                }
+        function playMusicEngine() {
+            if (isAudioPlaying || !audio) return;
+            audio.volume = 0.85;
+            audio.play().then(() => {
+                isAudioPlaying = true;
+                setPlayIcon(true);
+            }).catch(err => {
+                console.log("Autoplay blocked, waiting for interaction:", err);
             });
         }
 
-        function playMusicEngine() {
-            isAudioPlaying = true;
-            let ytStarted = false;
-
-            if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-                try {
-                    ytPlayer.playVideo();
-                    ytStarted = true;
-                } catch(err) {
-                    ytStarted = false;
-                }
-            }
-
-            // Fallback audio element
-            const backupAudio = document.getElementById('backup-audio');
-            if (backupAudio && !ytStarted) {
-                backupAudio.play().catch(() => {});
-            }
-            setPlayIcon(true);
+        function startMusicOnFirstInteraction() {
+            playMusicEngine();
+            window.removeEventListener('click', startMusicOnFirstInteraction);
+            window.removeEventListener('touchstart', startMusicOnFirstInteraction);
+            window.removeEventListener('pointerdown', startMusicOnFirstInteraction);
         }
 
+        window.addEventListener('click', startMusicOnFirstInteraction);
+        window.addEventListener('touchstart', startMusicOnFirstInteraction);
+        window.addEventListener('pointerdown', startMusicOnFirstInteraction);
+
         function togglePlayMusic() {
-            const backupAudio = document.getElementById('backup-audio');
+            if (!audio) return;
             if (isAudioPlaying) {
-                if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
-                if (backupAudio) backupAudio.pause();
-                setPlayIcon(false);
+                audio.pause();
                 isAudioPlaying = false;
+                setPlayIcon(false);
             } else {
                 playMusicEngine();
             }
         }
 
         function toggleMute() {
-            const backupAudio = document.getElementById('backup-audio');
+            if (!audio) return;
             const volIcon = document.getElementById('volume-icon');
             if (isMuted) {
-                if (ytPlayer && typeof ytPlayer.unMute === 'function') ytPlayer.unMute();
-                if (backupAudio) backupAudio.muted = false;
+                audio.muted = false;
                 volIcon.className = "fa-solid fa-volume-high";
                 isMuted = false;
             } else {
-                if (ytPlayer && typeof ytPlayer.mute === 'function') ytPlayer.mute();
-                if (backupAudio) backupAudio.muted = true;
+                audio.muted = true;
                 volIcon.className = "fa-solid fa-volume-xmark";
                 isMuted = true;
             }
@@ -480,26 +451,12 @@
 
         function setPlayIcon(playing) {
             const playIcon = document.getElementById('play-icon');
-            playIcon.className = playing ? "fa-solid fa-pause" : "fa-solid fa-play";
-        }
-// Global listener: Starts audio on HER VERY FIRST touch or click anywhere on screen!
-        function startMusicOnFirstInteraction() {
-            if (!isAudioPlaying) {
-                playMusicEngine();
+            if (playIcon) {
+                playIcon.className = playing ? "fa-solid fa-pause" : "fa-solid fa-play";
             }
-            // Remove listeners after first touch so it doesn't re-trigger
-            window.removeEventListener('click', startMusicOnFirstInteraction);
-            window.removeEventListener('touchstart', startMusicOnFirstInteraction);
-            window.removeEventListener('pointerdown', startMusicOnFirstInteraction);
         }
-
-        // Attach touch/click listeners to the whole browser window immediately
-        window.addEventListener('click', startMusicOnFirstInteraction);
-        window.addEventListener('touchstart', startMusicOnFirstInteraction);
-        window.addEventListener('pointerdown', startMusicOnFirstInteraction);
 
         function openEnvelope() {
-            // Backup trigger to ensure playback if she taps the envelope directly
             startMusicOnFirstInteraction();
 
             const intro = document.getElementById('intro-screen');
@@ -516,7 +473,7 @@
                 main.style.opacity = "1";
             }, 800);
         }
-        
+
         function updateCountdown() {
             const movieDate = new Date("August 1, 2026 14:00:00").getTime();
             const now = new Date().getTime();
@@ -564,10 +521,10 @@
             let type = "dou";
 
             if (rng < 0.35) {
-                contentText = "DOU";
+                contentText = "DOU FUCK YOU";
                 type = "dou";
             } else if (rng < 0.65) {
-                const names = [" Tosin ", "My Baby", "DOU FUCK YOUU!!!!"];
+                const names = ["Tosin", "My Baby", "DOU FUCK"];
                 contentText = names[Math.floor(Math.random() * names.length)];
                 type = "name";
             } else {
