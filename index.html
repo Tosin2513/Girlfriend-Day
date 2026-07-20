@@ -189,7 +189,7 @@
                             <div class="md:col-span-5 relative group">
                                 <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-2xl blur opacity-70 group-hover:opacity-100 transition duration-1000"></div>
                                 <div class="relative bg-[#110e26] rounded-2xl overflow-hidden aspect-[3/4] flex flex-col items-center justify-center border border-white/10 text-center shadow-lg">
-                                    <img src="home.png" 
+                                    <img src="home.jpg" 
                                          alt="DreamWorks Home Movie Banner" 
                                          class="w-full h-full object-cover rounded-2xl"
                                          onerror="this.onerror=null; this.src='https://m.media-amazon.com/images/M/MV5BMTQxNzI3MzU3NF5BMl5BanBnXkFtZTgwNzY2MDYyNDE@._V1_FMjpg_UX1000_.jpg';" />
@@ -482,9 +482,25 @@
             const playIcon = document.getElementById('play-icon');
             playIcon.className = playing ? "fa-solid fa-pause" : "fa-solid fa-play";
         }
+// Global listener: Starts audio on HER VERY FIRST touch or click anywhere on screen!
+        function startMusicOnFirstInteraction() {
+            if (!isAudioPlaying) {
+                playMusicEngine();
+            }
+            // Remove listeners after first touch so it doesn't re-trigger
+            window.removeEventListener('click', startMusicOnFirstInteraction);
+            window.removeEventListener('touchstart', startMusicOnFirstInteraction);
+            window.removeEventListener('pointerdown', startMusicOnFirstInteraction);
+        }
+
+        // Attach touch/click listeners to the whole browser window immediately
+        window.addEventListener('click', startMusicOnFirstInteraction);
+        window.addEventListener('touchstart', startMusicOnFirstInteraction);
+        window.addEventListener('pointerdown', startMusicOnFirstInteraction);
 
         function openEnvelope() {
-            playMusicEngine();
+            // Backup trigger to ensure playback if she taps the envelope directly
+            startMusicOnFirstInteraction();
 
             const intro = document.getElementById('intro-screen');
             const main = document.getElementById('main-content');
@@ -500,7 +516,7 @@
                 main.style.opacity = "1";
             }, 800);
         }
-
+        
         function updateCountdown() {
             const movieDate = new Date("August 1, 2026 14:00:00").getTime();
             const now = new Date().getTime();
@@ -544,14 +560,14 @@
 
             const bubble = document.createElement('div');
             const rng = Math.random();
-            let contentText = "DOU";
+            let contentText = "DOU DIE!!!";
             let type = "dou";
 
             if (rng < 0.35) {
                 contentText = "DOU";
                 type = "dou";
             } else if (rng < 0.65) {
-                const names = [" FUCK DOU ", "My Baby", "Dou DIE!!!!"];
+                const names = [" Tosin ", "My Baby", "DOU FUCK YOUU!!!!"];
                 contentText = names[Math.floor(Math.random() * names.length)];
                 type = "name";
             } else {
