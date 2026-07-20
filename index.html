@@ -6,11 +6,11 @@
     <title>A Magical Invitation For You ✨</title>
     <!-- Tailwind CSS for high-end modern styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Fredoka (playful, movie-style) & Quicksand (soft, modern sans) -->
+    <!-- Google Fonts: Fredoka & Quicksand -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for beautiful icons -->
+    <!-- FontAwesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -22,7 +22,6 @@
         .font-title {
             font-family: 'Fredoka', sans-serif;
         }
-        /* Custom scrollbar to keep layout premium */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -33,7 +32,6 @@
             background: #4f46e5;
             border-radius: 999px;
         }
-        /* Smooth transitions */
         .glass {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(12px);
@@ -47,7 +45,6 @@
             border: 1px solid rgba(168, 85, 247, 0.2);
             box-shadow: 0 8px 32px 0 rgba(147, 51, 234, 0.15);
         }
-        /* Shake effect for bomb explosion */
         @keyframes screen-shake {
             0%, 100% { transform: translate(0, 0); }
             10%, 30%, 50%, 70%, 90% { transform: translate(-4px, 4px) rotate(-1deg); }
@@ -56,7 +53,6 @@
         .shake-active {
             animation: screen-shake 0.4s ease-in-out;
         }
-        /* Pulse glows */
         @keyframes subtle-glow {
             0%, 100% { box-shadow: 0 0 15px rgba(168, 85, 247, 0.4); }
             50% { box-shadow: 0 0 30px rgba(236, 72, 153, 0.6); }
@@ -64,7 +60,6 @@
         .glow-button {
             animation: subtle-glow 3s infinite;
         }
-        /* Floating animations representing bubbles from 'Home' */
         @keyframes float {
             0% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-15px) rotate(5deg); }
@@ -73,11 +68,6 @@
         .floating-element {
             animation: float 6s ease-in-out infinite;
         }
-        /* Card flip for envelope */
-        .perspective {
-            perspective: 1000px;
-        }
-        /* Loading animation */
         @keyframes spin-slow {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -89,30 +79,26 @@
 </head>
 <body class="text-gray-100 min-h-screen flex flex-col justify-between relative selection:bg-pink-500 selection:text-white">
 
-    <!-- Beautiful Canvas for Starry Sky & Boov Bubbles -->
+    <!-- Canvas for Starry Sky -->
     <canvas id="galaxyCanvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
 
-    <!-- Invisible/Styled YouTube background player for "Towards the Sun" -->
-    <!-- Video ID hS58vOnuXb8 is the highly reliable official audio of "Towards the Sun" -->
-    <div class="hidden">
+    <!-- Invisible Audio Engine Containers -->
+    <div class="fixed top-0 left-0 w-1 h-1 opacity-0 pointer-events-none overflow-hidden">
         <div id="yt-player"></div>
+        <audio id="backup-audio" loop preload="auto">
+            <source src="https://ia800902.us.archive.org/28/items/RihannaTowardsTheSun/Rihanna%20-%20Towards%20The%20Sun.mp3" type="audio/mpeg">
+        </audio>
     </div>
 
     <!-- ENVELOPE / LOCK SCREEN -->
     <div id="intro-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-[#070514]">
         <div class="max-w-md w-full text-center space-y-8 floating-element">
             <div class="relative inline-block">
-                <!-- Floating space bubble representing Oh's bubble car -->
-                <div class="absolute -top-12 -left-12 w-24 h-24 bg-purple-500/20 rounded-full blur-xl animate-pulse"></div>
-                <div class="absolute -bottom-12 -right-12 w-24 h-24 bg-pink-500/20 rounded-full blur-xl animate-pulse"></div>
-                
                 <!-- Envelope Body -->
                 <div id="envelope" onclick="openEnvelope()" class="cursor-pointer transition-transform duration-500 hover:scale-105 active:scale-95">
                     <div class="glass-premium p-8 rounded-3xl border border-pink-500/30 flex flex-col items-center justify-center space-y-4 shadow-2xl relative overflow-hidden">
-                        <!-- Holographic glitter overlays -->
                         <div class="absolute inset-0 bg-gradient-to-tr from-purple-500/10 via-transparent to-pink-500/10 pointer-events-none"></div>
                         
-                        <!-- Floating Seal Icon -->
                         <div class="w-20 h-20 bg-gradient-to-tr from-pink-500 to-purple-600 rounded-full flex items-center justify-center text-white text-3xl shadow-lg shadow-pink-500/50 hover:rotate-12 transition-transform duration-300">
                             <i class="fa-solid fa-envelope-open-text"></i>
                         </div>
@@ -121,7 +107,7 @@
                             A message for my favorite scholar ✨
                         </h2>
                         <p class="text-sm text-purple-200/80 max-w-xs leading-relaxed">
-                            A little galaxy of stars is waiting for you inside. Tap to open and start our favorite tune.
+                            A little galaxy of stars is waiting for you inside. Tap to open and play the tune.
                         </p>
                         
                         <span class="text-xs text-pink-400/60 font-semibold uppercase tracking-wider animate-pulse pt-2">
@@ -143,7 +129,6 @@
         <!-- HEADER AND MUSIC CONTROL PANEL -->
         <header class="w-full flex flex-col md:flex-row items-center justify-between gap-4 glass p-4 rounded-2xl border border-white/5 shadow-lg">
             <div class="flex items-center gap-3">
-                <!-- Mini Spinning Bubble/Vinyl Album Art from the Movie -->
                 <div class="relative w-12 h-12 flex-shrink-0">
                     <div class="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full blur animate-pulse"></div>
                     <div class="relative w-full h-full bg-[#1c183a] rounded-full flex items-center justify-center border border-white/20 spin-slow cursor-pointer" onclick="togglePlayMusic()">
@@ -158,126 +143,102 @@
                 </div>
             </div>
 
-            <!-- Custom Premium Audio Controls -->
             <div class="flex flex-col sm:flex-row items-center gap-4">
                 <div class="flex items-center gap-4 bg-purple-950/40 px-4 py-2 rounded-xl border border-purple-500/20">
                     <div class="text-xs text-right">
-                        <p class="font-semibold text-purple-200" id="now-playing-title">Loading track...</p>
-                        <p class="text-[10px] text-gray-400">Towards The Sun - Rihanna</p>
+                        <p class="font-semibold text-purple-200" id="now-playing-title">Towards The Sun</p>
+                        <p class="text-[10px] text-gray-400">Rihanna - Home Soundtrack</p>
                     </div>
                     <div class="flex items-center gap-2">
                         <button onclick="togglePlayMusic()" id="btn-play-pause" class="w-8 h-8 rounded-full bg-pink-600 hover:bg-pink-500 flex items-center justify-center text-white transition-all transform hover:scale-105" title="Play/Pause">
                             <i id="play-icon" class="fa-solid fa-play"></i>
                         </button>
-                        <!-- Visual volume indicator -->
                         <button onclick="toggleMute()" id="btn-volume" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-300 transition-all" title="Mute/Unmute">
                             <i id="volume-icon" class="fa-solid fa-volume-high"></i>
                         </button>
                     </div>
                 </div>
-                <!-- Playback Info for Preview mode / Autoplay restrictions -->
-                <p id="music-status-tip" class="text-[10px] text-pink-400/80 italic max-w-[150px] text-center hidden sm:block">
-                    Music blocked? Click the Disc or Play above! 🎵
-                </p>
             </div>
         </header>
 
         <!-- MAIN DASHBOARD CONTENT GRID -->
         <main class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch flex-grow w-full">
             
-            <!-- LEFT COLUMN: The Interactive Virtual Movie Ticket (lg:col-span-7) -->
+            <!-- LEFT COLUMN: Movie Ticket with home.png -->
             <section class="lg:col-span-7 flex flex-col justify-between space-y-6">
-                <!-- Movie Ticket Outer Glass Panel -->
                 <div class="glass-premium rounded-3xl p-6 md:p-8 flex flex-col justify-between h-full relative overflow-hidden shadow-2xl border border-purple-500/30">
-                    <!-- Ticket header style details -->
                     <div class="flex justify-between items-start border-b border-purple-500/20 pb-4 mb-6">
                         <div>
                             <span class="bg-pink-500/20 text-pink-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                                 Virtual Space Cinema
                             </span>
                             <h2 class="font-title text-3xl md:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-400 to-purple-300 mt-2">
-                                Ticket No. 0801
+                                Ticket No. 0001
                             </h2>
                         </div>
                         <div class="text-right">
-                            <span class="text-xs text-gray-400 block uppercase font-bold">LDR Premium Admit One</span>
+                            <span class="text-xs text-gray-400 block uppercase font-bold">Premium Admit One</span>
                             <span class="text-xs text-yellow-400 font-semibold"><i class="fa-solid fa-star mr-1"></i> VIP Seat</span>
                         </div>
                     </div>
 
-                    <!-- Inner Ticket Details & Visual Elements -->
                     <div class="space-y-6 flex-grow flex flex-col justify-center">
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                             
-                            <!-- Movie Poster - DreamWorks 'Home' Banner -->
+                            <!-- DreamWorks 'Home' Banner Image (home.png) -->
                             <div class="md:col-span-5 relative group">
-                                <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-2xl blur opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                                <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-2xl blur opacity-70 group-hover:opacity-100 transition duration-1000"></div>
                                 <div class="relative bg-[#110e26] rounded-2xl overflow-hidden aspect-[3/4] flex flex-col items-center justify-center border border-white/10 text-center shadow-lg">
-                                    <!-- Dynamic poster image from official IMDb movie poster URL -->
-                                    <img src="https://m.media-amazon.com/images/M/MV5BMTQxNzI3MzU3NF5BMl5BanBnXkFtZTgwNzY2MDYyNDE@._V1_FMjpg_UX1000_.jpg" 
-                                         alt="Home Movie Poster" 
+                                    <img src="home.png" 
+                                         alt="DreamWorks Home Movie Banner" 
                                          class="w-full h-full object-cover rounded-2xl"
-                                         onerror="this.style.display='none'; document.getElementById('poster-fallback').classList.remove('hidden');" />
-                                    <!-- Fallback UI if IMDb image link is blocked in some networks -->
-                                    <div id="poster-fallback" class="absolute inset-0 hidden flex flex-col items-center justify-center p-4">
-                                        <div class="text-5xl mb-3 animate-bounce">🛸</div>
-                                        <h4 class="font-title text-xl text-yellow-300">HOME</h4>
-                                        <p class="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">Our Feature Film</p>
-                                    </div>
+                                         onerror="this.onerror=null; this.src='https://m.media-amazon.com/images/M/MV5BMTQxNzI3MzU3NF5BMl5BanBnXkFtZTgwNzY2MDYyNDE@._V1_FMjpg_UX1000_.jpg';" />
                                     <div class="absolute bottom-2 left-2 right-2 bg-purple-950/90 rounded py-1 px-2 border border-purple-500/30">
                                         <p class="text-[9px] text-pink-300 font-bold uppercase tracking-wider">🍿 Bring Snacks!</p>
                                     </div>
                                 </div>
                             </div>
                             
-                            <!-- Date, Time and Invitation Proposal Wording -->
                             <div class="md:col-span-7 space-y-4">
                                 <div class="space-y-1">
                                     <p class="text-xs text-purple-300 font-semibold uppercase tracking-widest"><i class="fa-solid fa-calendar-days mr-1.5"></i> The Date & Time</p>
                                     <h3 class="text-xl md:text-2xl font-bold text-white">August 1st, 2026 @ 2:00 PM</h3>
-                                    <p class="text-xs text-gray-400">Wherever you are, we'll synchronize our screens, sync our hearts, and share the laughter.</p>
+                                    <p class="text-xs text-gray-400">Wherever you are, we'll sync,share the laughter and tears.</p>
                                 </div>
 
                                 <div class="space-y-1 bg-purple-950/20 p-3 rounded-xl border border-purple-500/10">
                                     <p class="text-xs text-pink-400 font-semibold uppercase tracking-widest"><i class="fa-solid fa-message mr-1.5"></i> The Promise</p>
                                     <p class="text-sm text-gray-300 italic leading-relaxed">
-                                        "Let's laugh, smile, and completely relax before your giant exam comes up. You can fully unplug with me, and then go be the brilliant, badass scholar you always are!"
+                                        "Let's laugh, smile, and completely relax before your exam comes up. You can fully unplug with me, and then go be the brilliant, badass scholar you are!"
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- RSVP Proposal Interactive Section -->
                     <div class="mt-8 pt-6 border-t border-purple-500/20 space-y-4">
                         <p class="text-center text-sm text-purple-200 font-semibold">
                             Will you join me on this intergalactic cozy movie date?
                         </p>
                         
-                        <!-- Side-by-side or stacked custom buttons -->
                         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <!-- Custom glowing affirmative button -->
                             <button onclick="acceptProposal(true)" class="glow-button w-full sm:w-auto bg-gradient-to-r from-pink-500 via-red-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-title font-semibold text-lg py-3.5 px-10 rounded-2xl transition duration-300 transform hover:scale-105 active:scale-95 shadow-lg flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-heart animate-pulse"></i> Yes, I'd Love To!
                             </button>
-                            
-                            <!-- Second even-more enthusiastic button -->
                             <button onclick="acceptProposal(false)" class="w-full sm:w-auto bg-purple-900/50 hover:bg-purple-800/80 text-purple-200 border border-purple-500/40 hover:border-pink-500/40 font-title font-semibold text-lg py-3.5 px-10 rounded-2xl transition duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                                 Absolutely YES! 🚀
                             </button>
                         </div>
                     </div>
 
-                    <!-- Ticket Side Punch-holes decorative -->
                     <div class="absolute top-1/2 -left-4 w-8 h-8 rounded-full bg-[#0b091a] -translate-y-1/2 border-r border-purple-500/30"></div>
                     <div class="absolute top-1/2 -right-4 w-8 h-8 rounded-full bg-[#0b091a] -translate-y-1/2 border-l border-purple-500/30"></div>
                 </div>
             </section>
 
-            <!-- RIGHT COLUMN: Countdown & Heartfelt Letter & Relax Mini-game (lg:col-span-5) -->
+            <!-- RIGHT COLUMN: Countdown & Game -->
             <section class="lg:col-span-5 flex flex-col space-y-6">
                 
-                <!-- Countdown Module -->
                 <div class="glass-premium rounded-3xl p-6 text-center border border-purple-500/20 relative overflow-hidden">
                     <p class="text-xs uppercase tracking-widest text-pink-400 font-semibold mb-3">Countdown to Cozy Time</p>
                     <div class="grid grid-cols-4 gap-2" id="countdown-timer">
@@ -300,51 +261,46 @@
                     </div>
                 </div>
 
-                <!-- Heartfelt Badass Scholar encouragement letter -->
                 <div class="glass rounded-3xl p-6 space-y-4 flex-grow border border-white/5 flex flex-col justify-between">
                     <div class="space-y-3">
                         <div class="flex items-center gap-2 text-pink-400 font-semibold">
                             <span class="text-xl">🎓</span>
-                            <h3 class="font-title text-lg">To My Favorite Scholar...</h3>
+                            <h3 class="font-title text-lg">To My Only Scholar...</h3>
                         </div>
                         <p class="text-sm text-gray-300 leading-relaxed">
-                            I know how hard you've been working, how much determination you pack into your days, and how close those crucial exams are. You are brilliant, beautiful, and absolutely capable of conquering anything you face.
+                            I know how hard you've been working, how much determination you pack into your days, and how close and stressful this exams are exams are. You are brilliant, beautiful, and absolutely capable of conquering anything you face.
                         </p>
                         <p class="text-sm text-gray-300 leading-relaxed">
-                            But before you go and crush those study guides like a certified badass, you deserve to press pause. This invitation is for you to just collapse, eat some warm popcorn, and enjoy a movie we love. Let's make an evening of laugh lines, silly smiles, and quiet comfort.
+                            But before you go and crush those study guides like a certified badass, you deserve to press pause. This invitation is for you to just collapse, eat some warm popcorn, and enjoy a movie. Let's make an evening of laugh lines, silly smiles, and quiet comfort.
                         </p>
                     </div>
                     
                     <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs text-purple-300">
-                        <span>LDR Cinema Line Sync</span>
+                        <span>Cinema Line Sync</span>
                         <span class="italic font-bold">With love, forever. ✨</span>
                     </div>
                 </div>
 
-                <!-- Stress-Relief Interactive Mini-game: Pop Boov Bubbles, Explode "DOU", and Collect Names! -->
                 <div class="glass-premium rounded-3xl p-6 border border-purple-500/20 flex flex-col justify-between relative overflow-hidden">
                     <div class="flex justify-between items-center mb-3">
                         <div>
                             <h4 class="font-title text-base text-yellow-300 flex items-center gap-1.5">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i> Sweet Stress-Relief
                             </h4>
-                            <p class="text-[10px] text-gray-400">Explode the letters "DOU" & pop love stuff!</p>
+                            <p class="text-[10px] text-gray-400">Explode the letters "FUCK DOU" & pop love stuff!</p>
                         </div>
                         <div class="bg-pink-900/30 border border-pink-500/30 px-3 py-1 rounded-full text-xs font-semibold text-pink-300">
                             Score: <span id="game-score">0</span>
                         </div>
                     </div>
 
-                    <!-- Mini Game Active Canvas/Container Area -->
                     <div id="game-container" class="relative w-full h-44 bg-[#0d0a21] rounded-2xl border border-white/5 overflow-hidden cursor-crosshair">
-                        <!-- Play Game Prompt Overlay -->
                         <div id="game-start-prompt" class="absolute inset-0 flex flex-col items-center justify-center bg-[#0d0a21]/90 z-20 transition-opacity duration-300 text-center p-2">
                             <p class="text-xs text-purple-200 mb-2">Need a quick study break?</p>
                             <button onclick="startGame()" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-title text-xs py-2 px-5 rounded-xl transition duration-200 shadow-md">
                                 Tap to Play & Explode! 🎈
                             </button>
                         </div>
-                        <!-- Container to spawn elements dynamically -->
                         <div id="bubble-spawn-area" class="w-full h-full relative"></div>
                     </div>
                 </div>
@@ -352,7 +308,6 @@
             </section>
         </main>
 
-        <!-- FOOTER BAR -->
         <footer class="w-full text-center py-4 border-t border-white/5 mt-8">
             <p class="text-xs text-gray-500">
                 Created with deep affection for National Girlfriend Day. Underneath the same sun, counting down. 🌌
@@ -360,13 +315,9 @@
         </footer>
     </div>
 
-    <!-- RSVP SUCCESS POPUP MODAL -->
+    <!-- RSVP SUCCESS MODAL -->
     <div id="success-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
         <div class="glass-premium max-w-md w-full p-8 rounded-3xl border border-yellow-300/40 text-center space-y-6 relative overflow-hidden shadow-2xl">
-            <!-- Confetti floating elements inside modal -->
-            <div class="absolute -top-12 -left-12 w-28 h-28 bg-yellow-500/20 rounded-full blur-2xl"></div>
-            <div class="absolute -bottom-12 -right-12 w-28 h-28 bg-pink-500/20 rounded-full blur-2xl"></div>
-
             <div class="w-24 h-24 bg-gradient-to-tr from-yellow-300 to-pink-500 rounded-full flex items-center justify-center text-4xl mx-auto shadow-lg shadow-pink-500/30 animate-bounce">
                 🍿🎬
             </div>
@@ -379,12 +330,12 @@
                     🍿 August 1st @ 2:00 PM 🍿
                 </p>
                 <p class="text-sm text-gray-300 leading-relaxed pt-2">
-                    Our intergalactic reservation is officially locked in! Popcorn, cozy blankets, the movie <em>"Home"</em>, and endless smiles. A confirmation code has been copied for your logs!
+                    Our intergalactic reservation is officially locked in! Popcorn, cozy blankets, the movie <em>"Home"</em>, and endless smiles.
                 </p>
             </div>
 
             <div class="bg-[#110e26] p-4 rounded-2xl border border-white/5 space-y-1">
-                <span class="text-[10px] text-gray-400 uppercase block">Send this back to him to seal it:</span>
+                <span class="text-[10px] text-gray-400 uppercase block">Send this back to her to seal it:</span>
                 <p class="text-xs text-yellow-300 font-mono break-all font-semibold" id="confirm-msg-text">
                     "I accept! Let's watch Home together and relax! 🍿❤️"
                 </p>
@@ -399,14 +350,12 @@
         </div>
     </div>
 
-    <!-- SCRIPTS -->
     <script>
-        // Custom interactive space dust / star background canvas
+        // Starry Canvas Setup
         const canvas = document.getElementById('galaxyCanvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
         let shootingStars = [];
-        let backgroundBubbles = [];
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -428,158 +377,115 @@
             }
         }
 
-        // Spawn a shooting star periodically
-        function spawnShootingStar() {
-            if (shootingStars.length < 3) {
-                shootingStars.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * (canvas.height / 2),
-                    length: Math.random() * 80 + 40,
-                    speed: Math.random() * 12 + 8,
-                    angle: Math.PI / 4 + (Math.random() * 0.2 - 0.1),
-                    opacity: 1
-                });
-            }
-        }
-
-        // Starry Sky Animation Loop
         function animateStars() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Draw background soft gradient
             const grad = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 10, canvas.width/2, canvas.height/2, canvas.width);
             grad.addColorStop(0, '#110b2b');
             grad.addColorStop(1, '#070514');
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Twinkle normal stars
             stars.forEach(star => {
                 star.opacity += star.speed;
-                if (star.opacity > 1 || star.opacity < 0) {
-                    star.speed = -star.speed;
-                }
+                if (star.opacity > 1 || star.opacity < 0) star.speed = -star.speed;
                 ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0, Math.min(1, star.opacity))})`;
                 ctx.beginPath();
                 ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
                 ctx.fill();
             });
 
-            // Draw shooting stars
-            for (let i = shootingStars.length - 1; i >= 0; i--) {
-                let s = shootingStars[i];
-                s.x += Math.cos(s.angle) * s.speed;
-                s.y += Math.sin(s.angle) * s.speed;
-                s.opacity -= 0.02;
-
-                if (s.opacity <= 0 || s.x > canvas.width || s.y > canvas.height) {
-                    shootingStars.splice(i, 1);
-                } else {
-                    ctx.strokeStyle = `rgba(236, 72, 153, ${s.opacity})`;
-                    ctx.lineWidth = 1.5;
-                    ctx.beginPath();
-                    ctx.moveTo(s.x, s.y);
-                    ctx.lineTo(s.x - Math.cos(s.angle) * s.length, s.y - Math.sin(s.angle) * s.length);
-                    ctx.stroke();
-                }
-            }
-
             requestAnimationFrame(animateStars);
         }
 
-        // Initialize canvas and register window resize
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
-        setInterval(spawnShootingStar, 4000);
         animateStars();
 
-        // Load YouTube IFrame Player API
-        let player;
+        // Audio Handler Dual-Engine (YouTube API + Local Audio Fallback)
+        let ytPlayer;
+        let isAudioPlaying = false;
         let isMuted = false;
-        let musicStarted = false;
 
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        document.head.appendChild(tag);
 
         function onYouTubeIframeAPIReady() {
-            // Video ID: hS58vOnuXb8 (Rihanna - Towards the Sun official audio)
-            player = new YT.Player('yt-player', {
-                height: '100',
-                width: '100',
+            ytPlayer = new YT.Player('yt-player', {
+                height: '10',
+                width: '10',
                 videoId: 'hS58vOnuXb8',
-                playerVars: {
-                    'playsinline': 1,
-                    'controls': 0,
-                    'disablekb': 1,
-                    'modestbranding': 1,
-                    'rel': 0,
-                    'loop': 1,
-                    'playlist': 'hS58vOnuXb8'
-                },
+                playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'hS58vOnuXb8' },
                 events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
+                    'onReady': () => {},
+                    'onStateChange': (e) => {
+                        if (e.data === YT.PlayerState.PLAYING) {
+                            setPlayIcon(true);
+                        } else if (e.data === YT.PlayerState.PAUSED) {
+                            setPlayIcon(false);
+                        }
+                    }
                 }
             });
         }
 
-        function onPlayerReady(event) {
-            document.getElementById('now-playing-title').innerText = "Rihanna - Towards the Sun";
-            // Pre-mute to bypass browser autoplay rules if needed, but start loop at volume 65%
-            player.setVolume(85);
-        }
+        function playMusicEngine() {
+            isAudioPlaying = true;
+            let ytStarted = false;
 
-        function onPlayerStateChange(event) {
-            const playIcon = document.getElementById('play-icon');
-            if (event.data == YT.PlayerState.PLAYING) {
-                playIcon.className = "fa-solid fa-pause";
-                document.getElementById('now-playing-title').classList.add('animate-pulse');
-                document.getElementById('music-status-tip').classList.add('hidden');
-            } else {
-                playIcon.className = "fa-solid fa-play";
-                document.getElementById('now-playing-title').classList.remove('animate-pulse');
+            if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+                try {
+                    ytPlayer.playVideo();
+                    ytStarted = true;
+                } catch(err) {
+                    ytStarted = false;
+                }
             }
+
+            // Fallback audio element
+            const backupAudio = document.getElementById('backup-audio');
+            if (backupAudio && !ytStarted) {
+                backupAudio.play().catch(() => {});
+            }
+            setPlayIcon(true);
         }
 
         function togglePlayMusic() {
-            if (!player) return;
-            const state = player.getPlayerState();
-            if (state == YT.PlayerState.PLAYING) {
-                player.pauseVideo();
+            const backupAudio = document.getElementById('backup-audio');
+            if (isAudioPlaying) {
+                if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
+                if (backupAudio) backupAudio.pause();
+                setPlayIcon(false);
+                isAudioPlaying = false;
             } else {
-                player.playVideo();
+                playMusicEngine();
             }
         }
 
         function toggleMute() {
-            if (!player) return;
+            const backupAudio = document.getElementById('backup-audio');
             const volIcon = document.getElementById('volume-icon');
             if (isMuted) {
-                player.unMute();
+                if (ytPlayer && typeof ytPlayer.unMute === 'function') ytPlayer.unMute();
+                if (backupAudio) backupAudio.muted = false;
                 volIcon.className = "fa-solid fa-volume-high";
                 isMuted = false;
             } else {
-                player.mute();
+                if (ytPlayer && typeof ytPlayer.mute === 'function') ytPlayer.mute();
+                if (backupAudio) backupAudio.muted = true;
                 volIcon.className = "fa-solid fa-volume-xmark";
                 isMuted = true;
             }
         }
 
+        function setPlayIcon(playing) {
+            const playIcon = document.getElementById('play-icon');
+            playIcon.className = playing ? "fa-solid fa-pause" : "fa-solid fa-play";
+        }
+
         function openEnvelope() {
-            // Play audio upon direct user interaction (this bypasses autoplay blocks!)
-            if (player) {
-                player.playVideo();
-                // Backup check to ensure audio is playing, otherwise show notice
-                setTimeout(() => {
-                    if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
-                        document.getElementById('music-status-tip').classList.remove('hidden');
-                    }
-                }, 1500);
-            }
-            
-            // Transition out envelope lock screen
+            playMusicEngine();
+
             const intro = document.getElementById('intro-screen');
             const main = document.getElementById('main-content');
             
@@ -590,14 +496,12 @@
             setTimeout(() => {
                 intro.classList.add('hidden');
                 main.classList.remove('hidden');
-                // Use browser forced reflow to trigger CSS opacity transition
                 void main.offsetWidth;
                 main.style.opacity = "1";
             }, 800);
         }
 
         function updateCountdown() {
-            // Goal: August 1st, 2026, 14:00 (2:00 PM) local time (or UTC if standardized, let's target local)
             const movieDate = new Date("August 1, 2026 14:00:00").getTime();
             const now = new Date().getTime();
             const diff = movieDate - now;
@@ -610,37 +514,28 @@
                 return;
             }
 
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById('days').innerText = String(days).padStart(2, '0');
-            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+            document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+            document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
         }
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
+        // Game Mechanics
         let gameScore = 0;
-        let gameInterval;
         let isGameRunning = false;
 
         function startGame() {
             document.getElementById('game-start-prompt').classList.add('opacity-0');
-            setTimeout(() => {
-                document.getElementById('game-start-prompt').classList.add('hidden');
-            }, 300);
+            setTimeout(() => document.getElementById('game-start-prompt').classList.add('hidden'), 300);
             
             if (isGameRunning) return;
             isGameRunning = true;
             gameScore = 0;
             document.getElementById('game-score').innerText = gameScore;
-            
-            // Spawn elements fast
-            gameInterval = setInterval(spawnBubble, 800);
+            setInterval(spawnBubble, 800);
         }
 
         function spawnBubble() {
@@ -648,17 +543,15 @@
             if (!spawnArea) return;
 
             const bubble = document.createElement('div');
-            
-            // Choose between "DOU" letters, boyfriend name labels, or sweet love emojis
             const rng = Math.random();
             let contentText = "DOU";
-            let type = "dou"; // 'dou', 'name', or 'love'
+            let type = "dou";
 
             if (rng < 0.35) {
                 contentText = "DOU";
                 type = "dou";
             } else if (rng < 0.65) {
-                const names = ["DOU ❤️", "My Boy", "Dou"];
+                const names = [" FUCK DOU ", "My Baby", "Dou DIE!!!!"];
                 contentText = names[Math.floor(Math.random() * names.length)];
                 type = "name";
             } else {
@@ -667,16 +560,12 @@
                 type = "love";
             }
             
-            // Add custom color themes per type
             let bubbleStyleClasses = "rounded-full flex items-center justify-center font-bold shadow-lg select-none px-3 py-1 cursor-pointer transition-transform duration-200 hover:scale-110 border";
             if (type === "dou") {
-                // Orange/red/purple glowing bomb styling for DOU
                 bubbleStyleClasses += " bg-gradient-to-r from-red-600 via-pink-600 to-purple-600 border-yellow-400 text-white text-xs tracking-wider animate-pulse";
             } else if (type === "name") {
-                // Purple and cyan glow
                 bubbleStyleClasses += " bg-indigo-900/90 border-indigo-400 text-pink-300 text-xs";
             } else {
-                // Pink heart floating styles
                 bubbleStyleClasses += " bg-pink-950/60 border-pink-500/50 text-base";
             }
 
@@ -685,54 +574,34 @@
             bubble.style.left = Math.random() * 75 + 5 + "%";
             bubble.innerHTML = contentText;
             
-            // Float speeds
-            const floatDuration = Math.random() * 3.5 + 2.5; // seconds
+            const floatDuration = Math.random() * 3.5 + 2.5;
             bubble.style.transition = `bottom ${floatDuration}s linear, opacity ${floatDuration}s ease-in`;
             
             spawnArea.appendChild(bubble);
 
-            // Pop sound & particle explosions on click
             bubble.addEventListener('mousedown', (e) => {
                 e.stopPropagation();
-                
                 if (type === "dou") {
-                    // Explode like a bomb! Trigger shake on the whole game container
                     const gameContainer = document.getElementById('game-container');
                     gameContainer.classList.add('shake-active');
                     setTimeout(() => gameContainer.classList.remove('shake-active'), 410);
-                    
-                    // Large fiery bomb particle explosion!
                     triggerExplosion(e.clientX, e.clientY, true);
-                    gameScore += 25; // High score for DOU bomb!
+                    gameScore += 25;
                 } else {
-                    // Sweet standard love pop
                     triggerExplosion(e.clientX, e.clientY, false);
-                    gameScore += 15; // Points anyway!
+                    gameScore += 15;
                 }
-
                 bubble.remove();
                 document.getElementById('game-score').innerText = gameScore;
             });
 
-            // Trigger float up animation
-            setTimeout(() => {
-                bubble.style.bottom = "120%";
-            }, 50);
-
-            // Clean up when bubble hits top
-            setTimeout(() => {
-                if (bubble.parentNode) {
-                    bubble.remove();
-                }
-            }, floatDuration * 1000);
+            setTimeout(() => { bubble.style.bottom = "120%"; }, 50);
+            setTimeout(() => { if (bubble.parentNode) bubble.remove(); }, floatDuration * 1000);
         }
 
-        // Custom Explosion Particle Effect
         function triggerExplosion(x, y, isBomb) {
-            const particleCount = isBomb ? 24 : 8;
-            const items = isBomb 
-                ? ["💥", "🔥", "✨", "🔴", "💛", "⚡"] 
-                : ["❤️", "✨", "💖", "🥰", "✨"];
+            const particleCount = isBomb ? 20 : 8;
+            const items = isBomb ? ["💥", "🔥", "✨", "🔴", "⚡"] : ["❤️", "✨", "💖", "🥰"];
 
             for (let i = 0; i < particleCount; i++) {
                 const conf = document.createElement('div');
@@ -740,43 +609,27 @@
                 conf.innerText = items[Math.floor(Math.random() * items.length)];
                 conf.style.left = x + 'px';
                 conf.style.top = y + 'px';
-                conf.style.opacity = "1";
                 document.body.appendChild(conf);
 
-                // Velocity vectors
                 const angle = Math.random() * Math.PI * 2;
-                const distance = isBomb ? (Math.random() * 120 + 40) : (Math.random() * 60 + 20);
-                const destX = Math.cos(angle) * distance;
-                const destY = Math.sin(angle) * distance;
-
-                // Push frames to hardware acceleration
+                const distance = isBomb ? (Math.random() * 100 + 30) : (Math.random() * 50 + 10);
+                
                 setTimeout(() => {
-                    conf.style.transform = `translate(${destX}px, ${destY}px) scale(${isBomb ? Math.random() * 2 + 0.5 : Math.random() * 1.2 + 0.5})`;
+                    conf.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0.5)`;
                     conf.style.opacity = "0";
                 }, 10);
 
-                setTimeout(() => {
-                    conf.remove();
-                }, 600);
+                setTimeout(() => conf.remove(), 550);
             }
         }
 
         function acceptProposal(isFirstChoice) {
-            // Trigger high-end colorful star confetti shower
-            triggerConfettiShower();
-
-            // Set custom copy letter in confirmation box
             const confirmMsg = document.getElementById('confirm-msg-text');
-            if (isFirstChoice) {
-                confirmMsg.innerText = "I accept! Let's watch 'Home' on August 1st at 2:00 PM and relax! 🍿❤️";
-            } else {
-                confirmMsg.innerText = "ABSOLUTELY YES! Let's watch 'Home', disconnect from exam stress, and share our stars! 🍿✨🚀";
-            }
+            confirmMsg.innerText = isFirstChoice 
+                ? "I accept! Let's watch 'Home' on August 1st at 2:00 PM and relax! 🍿❤️"
+                : "ABSOLUTELY YES! Let's watch 'Home', disconnect from exam stress, and share our stars! 🍿✨🚀";
 
-            // Copy to clipboard immediately as fallback
             copyConfirmationText();
-
-            // Open Success Dialog
             const modal = document.getElementById('success-modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -790,41 +643,12 @@
 
         function copyConfirmationText() {
             const text = document.getElementById('confirm-msg-text').innerText;
-            // Use fallback standard execute command for high browser compat under iframe structures
             const dummy = document.createElement("textarea");
             document.body.appendChild(dummy);
             dummy.value = text;
             dummy.select();
             document.execCommand("copy");
             document.body.removeChild(dummy);
-        }
-
-        // Full Screen Magical Confetti Burst
-        function triggerConfettiShower() {
-            const colors = ['#f43f5e', '#ec4899', '#a855f7', '#eab308', '#06b6d4'];
-            for (let i = 0; i < 75; i++) {
-                const conf = document.createElement('div');
-                conf.className = "fixed pointer-events-none z-50 text-xl";
-                conf.innerHTML = ['✨', '🎈', '❤️', '🍿', '🎬', '🌟'][Math.floor(Math.random() * 6)];
-                conf.style.left = Math.random() * 100 + 'vw';
-                conf.style.top = '-20px';
-                conf.style.transform = `scale(${Math.random() * 1.5 + 0.5})`;
-                
-                const fallDuration = Math.random() * 3 + 2; // seconds
-                conf.style.transition = `top ${fallDuration}s linear, left ${fallDuration}s ease-out, opacity ${fallDuration}s ease-in`;
-                conf.style.opacity = "1";
-                document.body.appendChild(conf);
-
-                setTimeout(() => {
-                    conf.style.top = '110vh';
-                    conf.style.left = (parseFloat(conf.style.left) + (Math.random() * 20 - 10)) + 'vw';
-                }, 50);
-
-                setTimeout(() => {
-                    conf.style.opacity = "0";
-                    setTimeout(() => conf.remove(), 200);
-                }, fallDuration * 1000);
-            }
         }
     </script>
 </body>
